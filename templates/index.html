@@ -7,22 +7,195 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://use.fontawesome.com/78063a0650.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
 </head>
 <style>
-	.navbar{
-		background-color: black;
-		height: 60px;
+	.icon-color{
+		color: white;
+	}
+	.title-color{
+		color: #DDDDDD;
+	}
+	#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.cases{
+	font-size: 30px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+.strip{
+	color: #00bace;
+}
+ .navbar{
+		background-color: #516A76;
+	}
+
+	.title{
+		display:table-cell;
+		vertical-align:middle;
+		font-size: 30px;
+		color: #DDDDDD;
+
+	}
 	
 </style>
 <body>
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <center>
-	    	<b>
-	    		COVID-19 CORONAVIRUS Tracker
-	    	</b>
+	    	<p class="title">
+	    		COVID-19 CORONAVIRUS TRACKER
+	    	</p>
 	    </center>
 	  </div>
 	</nav>
+	<br>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col m6" style="font-size: 40px; color: #516A76">
+				<center><b>Helpline: +91-11-23978046</b></center>
+			</div>
+			<center><b><div style="font-size: 40px; color: #516A76" id="output"></div></b></center>
+		</div>
+	</div>
+
+	<br>
+		<div class="container-fluid">
+		<div class="row">
+	    <div class="col s12 m3">
+	      <div class="card blue-grey darken-1">
+	        <div class="card-content white-text">
+	          <span class="card-title title-color"><center>Total Cases</center></span>
+	          <center><i class="fa fa-users fa-5x icon-color"></i></center>
+	        </div>
+	        <div class="card-action title-color cases">
+	          <center>
+	          	{{ content.TotalConfirmed }}
+	          </center>
+	        </div>
+	      </div>
+    </div>
+    <div class="col s12 m3">
+	      <div class="card blue-grey darken-1">
+	        <div class="card-content white-text">
+	          <span class="card-title title-color"><center>New Cases</center></span>
+	          <center><i class="fa fa-bell fa-5x icon-color"></i></center>
+	        </div>
+	        <div class="card-action title-color cases">
+	          <center>
+	          	{{ content.NewConfirmed }}
+	          </center>
+	        </div>
+	      </div>
+    </div>
+    <div class="col s12 m3">
+	      <div class="card blue-grey darken-1">
+	        <div class="card-content white-text">
+	          <span class="card-title title-color"><center>Total Deaths</center></span>
+	          <center><i class="fa fa-bed fa-5x icon-color"></i></center>
+	        </div>
+	        <div class="card-action title-color cases">
+	          <center>
+	          	{{ content.TotalDeaths }}
+	          </center>
+	        </div>
+	      </div>
+    </div>
+    <div class="col s12 m3">
+	      <div class="card blue-grey darken-1">
+	        <div class="card-content white-text">
+	          <span class="card-title title-color"><center>Total Recovered</center></span>
+	          <center><i class="fa fa-child fa-5x icon-color"></i></center>
+	        </div>
+	        <div class="card-action title-color cases">
+	          <center>
+	          	{{ content.TotalRecovered }}
+	          </center>
+	        </div>
+	      </div>
+    </div>
+  	</div>
+  </div>
+
+
+  	<div class="container-fluid">
+  		<div class="row">
+  			<center><h5 class="strip"><b>Confirmed Cases and Deaths by Country</b></h5></center>
+  			
+  		</div>
+	  	</div>
+
+	  	<div class="container-fluid">
+	  		<div class="row">
+	  			<table id="customers">
+	  <tr>
+	    <th>Country</th>
+	    <th>Total Cases</th>
+	    <th>New Cases</th>
+	    <th>Total Deaths</th>
+	    <th>New Deaths</th>
+	    <th>Total Recovered</th>
+	    <th>New Recovered</th>
+	  </tr>
+	  {% for data in country %}
+	  <tr>
+	    <td>{{ data.Country }}</td>
+	    <td>{{ data.TotalConfirmed }}</td>
+	    <td>{{ data.NewConfirmed }}</td>
+	    <td>{{ data.TotalDeaths }}</td>
+	    <td>{{ data.NewDeaths }}</td>
+	    <td>{{ data.TotalRecovered }}</td>
+	    <td>{{ data.NewRecovered }}</td>
+	  </tr>
+	  {% endfor %}
+	</table>
+  		</div>
+  	</div>
+
+
 </body>
+<script>
+	var today = new Date();
+
+var day = today.getDate();
+var month = today.getMonth() + 1;
+var year = today.getFullYear();
+
+if (day < 10) {
+  day = '0' + day
+}
+if (month < 10) {
+  month = '0' + month
+}
+
+var out = document.getElementById("output");
+
+out.innerHTML = day + "/" + month + "/" + year;
+</script>
 </html>

@@ -6,9 +6,11 @@ URL = "https://api.covid19api.com/summary"
 
 @app.route('/')
 def home():
-	# data = requests.get(URL)
-	# response = data.json()
-	return render_template('index.html')
+	data = requests.get(URL)
+	response = data.json()
+	content = response['Global']
+	country = response['Countries']
+	return render_template('index.html', content=content, country=country)
 
 
 if __name__ == "__main__":
